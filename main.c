@@ -3,13 +3,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-const int head_pic  = 'O';
-const int tail_pic  = 'o';
-const int fruit_pic = '@';
-const int border_pic = '#';
+#define head_pic   'O'
+#define tail_pic   'o'
+#define fruit_pic  '@'
+#define border_pic '#'
 
-#define border_x  60
-#define border_y  20
+#define border_x   60
+#define border_y   20
+
+#define score_x    (border_x + 5)
+#define score_y    0
 
 enum { left, right, up, down } snakeDir = right;
 
@@ -23,12 +26,9 @@ int head_y = 20;
 
 int tail_x [border_x * border_y];
 int tail_y [border_x * border_y];
-
-int tail_count = 10;
+int tail_count = 5;
 
 int score = 0;
-const int score_x = border_x + 5;
-const int score_y = 0;
 
 void moveTo(int x, int y)
 {
