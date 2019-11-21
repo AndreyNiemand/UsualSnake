@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define head_pic   'O'
+#define head_pic   '0'
 #define tail_pic   'o'
 #define fruit_pic  '@'
 #define border_pic '#'
@@ -14,13 +14,12 @@
 #define score_x    (border_x + 5)
 #define score_y    0
 
-enum { left, right, up, down } snakeDir = right;
-
 enum { playing, pause, win } status = playing;
 
 int fruit_x = 0;
 int fruit_y = 0;
 
+enum { left, right, up, down } head_dir = right;
 int head_x = 20;
 int head_y = 20;
 
@@ -81,8 +80,7 @@ int main()
   GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &structCursorInfo);
   structCursorInfo.bVisible = FALSE;
   SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &structCursorInfo);
-
-
+  
   moveTo(score_x, score_y);
   puts("Score: ");
 
@@ -114,21 +112,21 @@ int main()
 
     for (int i = 0; i < 1000 / 24; i = i + 1)
     {
-      if (snakeDir != down && GetAsyncKeyState(VK_UP))
+      if (head_dir != down && GetAsyncKeyState(VK_UP))
       {
-        snakeDir = up;
+        head_dir = up;
       }
-      if (snakeDir != up && GetAsyncKeyState(VK_DOWN))
+      if (head_dir != up && GetAsyncKeyState(VK_DOWN))
       {
-        snakeDir = down;
+        head_dir = down;
       }
-      if (snakeDir != right && GetAsyncKeyState(VK_LEFT))
+      if (head_dir != right && GetAsyncKeyState(VK_LEFT))
       {
-        snakeDir = left;
+        head_dir = left;
       }
-      if (snakeDir != left && GetAsyncKeyState(VK_RIGHT))
+      if (head_dir != left && GetAsyncKeyState(VK_RIGHT))
       {
-        snakeDir = right;
+        head_dir = right;
       }
 
       if (GetAsyncKeyState(VK_ESCAPE))
@@ -163,7 +161,7 @@ int main()
     if (status == playing)
     {
       if (head_x == fruit_x
-        && head_y == fruit_y)
+       && head_y == fruit_y)
       {
         if (tail_count > 0)
         {
@@ -188,20 +186,20 @@ int main()
         tail_y[0] = head_y;
       }
 
-      if (snakeDir == left)
+      if (head_dir == left)
       {
         head_x = head_x - 1;
       }
-      if (snakeDir == right)
+      if (head_dir == right)
       {
         head_x = head_x + 1;
       }
 
-      if (snakeDir == up)
+      if (head_dir == up)
       {
         head_y = head_y - 1;
       }
-      if (snakeDir == down)
+      if (head_dir == down)
       {
         head_y = head_y + 1;
       }
